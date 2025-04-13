@@ -1,0 +1,119 @@
+Script started on 2025-04-13 18:16:17+00:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="133" LINES="22"]
+[0;32m@OwenHagen [0m➜ [1;34m/workspaces/homework-3-mongo-OwenHagen/homework3 [0;36m([1;31mmain[0;36m) [0m$ exitmongo
+MongoDB shell version v3.6.8
+connecting to: mongodb://127.0.0.1:27017
+Implicit session: session { "id" : UUID("304be50a-9db8-49f5-9bfb-d7a4d9cb9761") }
+MongoDB server version: 3.6.8
+Server has startup warnings: 
+2025-04-13T17:14:55.279+0000 I CONTROL  [initandlisten] 
+2025-04-13T17:14:55.279+0000 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2025-04-13T17:14:55.279+0000 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2025-04-13T17:14:55.279+0000 I CONTROL  [initandlisten] 
+2025-04-13T17:14:55.279+0000 I CONTROL  [initandlisten] 
+2025-04-13T17:14:55.279+0000 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+2025-04-13T17:14:55.279+0000 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+2025-04-13T17:14:55.279+0000 I CONTROL  [initandlisten] 
+> use acme_applications[3G[Juse acme_applications[24G
+switched to db acme_applications
+> db.applications.insertOne({[3G[Jdb.applications.insertOne({[30G
+...   application_id: "APP10001",[5G[J  application_id: "APP10001",[34G
+...   name: "John Smith",[5G[J  name: "John Smith",[26G
+...   zipcode: "90210",[5G[J  zipcode: "90210",[24G
+...   status: "received",[5G[J  status: "received",[26G
+...   notes: [],[5G[J  notes: [],[17G
+...   processing: {[5G[J  processing: {[20G
+...     personal_details_check: { completed: false, notes: [] },[5G[J    personal_details_check: { completed: false, notes: [] },[65G
+...     credit_check: { completed: false, notes: [] },[5G[J    credit_check: { completed: false, notes: [] },[55G
+...     certification_check: { completed: false, notes: [] }[5G[J    certification_check: { completed: false, notes: [] }[61G
+...   },[5G[J  },[9G
+...   acceptance_terms: [],[5G[J  acceptance_terms: [],[28G
+...   rejection_reason: null[5G[J  rejection_reason: null[29G
+... });[5G[J});[8G
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("67fbff8cc6966ee2477cc4df")
+}
+> db.applications.updateOne([3G[Jdb.applications.updateOne([29G
+...   { application_id: "APP10001" },[5G[J  { application_id: "APP10001" },[38G
+...   { $set: { status: "processing" } }[5G[J  { $set: { status: "processing" } }[41G
+... );[5G[J);[7G
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.applications.updateOne([3G[Jdb.applications.updateOne([29G
+...   { application_id: "APP10001" },[5G[J  { application_id: "APP10001" },[38G
+...   { $push: { notes: { type: "info", message: "Entered processing stage", timestamp: new Date() } } }[5G[J  { $push: { notes: { type: "info", message: "Entered processing stage", timestamp: new Date() } } }[105G
+... );[5G[J);[7G
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.applications.updateOne([3G[Jdb.applications.updateOne([29G
+...   { application_id: "APP10001" },[5G[J  { application_id: "APP10001" },[38G
+...   { $push: { "processing.personal_details_check.notes": "Verified SSN" } }[5G[J  { $push: { "processing.personal_details_check.notes": "Verified SSN" } }[79G
+... );[5G[J);[7G
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.applications.updateOne([3G[Jdb.applications.updateOne([29G
+...   { application_id: "APP10001" },[5G[J  { application_id: "APP10001" },[38G
+...   { $set: { "processing.personal_details_check.completed": true } }[5G[J  { $set: { "processing.personal_details_check.completed": true } }[72G
+... );[5G[J);[7G
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.applications.updateOne([3G[Jdb.applications.updateOne([29G
+...   { application_id: "APP10001" },[5G[J  { application_id: "APP10001" },[38G
+...   {[5G[J  {[8G
+...     $set: { status: "accepted" },[5G[J    $set: { status: "accepted" },[38G
+...     $push: { acceptance_terms: "Loan term: 5 years at 3.5% interest" }[5G[J    $push: { acceptance_terms: "Loan term: 5 years at 3.5% interest" }[75G
+...   }[5G[J  }[8G
+... );[5G[J);[7G
+{ "acknowledged" : true, "matchedCount" : 1, "modifiedCount" : 1 }
+> db.applications.findOne([3G[Jdb.applications.findOne([27G
+...   { application_id: "APP10001" },[5G[J  { application_id: "APP10001" },[38G
+...   {[5G[J  {[8G
+...     name: 1,[5G[J    name: 1,[17G
+...     status: 1,[5G[J    status: 1,[19G
+...     notes: 1,[5G[J    notes: 1,[18G
+...     processing: 1,[5G[J    processing: 1,[23G
+...     acceptance_terms: 1,[5G[J    acceptance_terms: 1,[29G
+...     rejection_reason: 1[5G[J    rejection_reason: 1[28G
+...   }[5G[J  }[8G
+... );[5G[J);[7G
+{
+	"_id" : ObjectId("67fbff8cc6966ee2477cc4df"),
+	"name" : "John Smith",
+	"status" : "accepted",
+	"notes" : [
+		{
+			"type" : "info",
+			"message" : "Entered processing stage",
+			"timestamp" : ISODate("2025-04-13T18:17:40.985Z")
+		}
+	],
+	"processing" : {
+		"personal_details_check" : {
+			"completed" : true,
+			"notes" : [
+				"Verified SSN"
+			]
+		},
+		"credit_check" : {
+			"completed" : false,
+			"notes" : [ ]
+		},
+		"certification_check" : {
+			"completed" : false,
+			"notes" : [ ]
+		}
+	},
+	"acceptance_terms" : [
+		"Loan term: 5 years at 3.5% interest"
+	],
+	"rejection_reason" : null
+}
+> show dbs[3G[Jshow dbs[11G
+acme_applications  0.000GB
+admin              0.000GB
+config             0.000GB
+local              0.000GB
+> show collections[3G[Jshow collections[19G
+applications
+> exit[3G[Jexit[7G
+bye
+[0;32m@OwenHagen [0m➜ [1;34m/workspaces/homework-3-mongo-OwenHagen/homework3 [0;36m([1;31mmain[0;36m) [0m$ exit
+exit
+
+Script done on 2025-04-13 18:19:23+00:00 [COMMAND_EXIT_CODE="0"]
