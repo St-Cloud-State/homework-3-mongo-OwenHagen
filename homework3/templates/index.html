@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan Application Portal</title>
+    <script defer src="/static/script.js"></script>
+</head>
+<body>
+    <h1>Acme Financial - Loan Applications</h1>
+
+    <h2>Submit Application</h2>
+    <input type="text" id="name" placeholder="Name">
+    <input type="text" id="address" placeholder="Address">
+    <button onclick="submitApplication()">Submit</button>
+    <p id="confirmation"></p>
+
+    <h2>Check Status</h2>
+    <input type="text" id="statusAppId" placeholder="Application ID">
+    <button onclick="checkStatus()">Check</button>
+    <p id="statusResult"></p>
+
+    <h2>Update Status</h2>
+    <input type="text" id="updateAppId" placeholder="Application ID">
+    <select id="newStatus">
+        <option>received</option>
+        <option>processing</option>
+        <option>accepted</option>
+        <option>rejected</option>
+    </select>
+    <input type="text" id="rejectionReason" placeholder="Reason (if rejected)">
+    <button onclick="updateStatus()">Update</button>
+
+    <h2>Add Note</h2>
+    <input type="text" id="noteAppId" placeholder="Application ID">
+    <input type="text" id="noteMessage" placeholder="Message">
+    <button onclick="addNote()">Add</button>
+
+    <h2>Add Processing Note</h2>
+    <input type="text" id="procNoteAppId" placeholder="Application ID">
+    <select id="processingPhase">
+    <option value="personal_details_check">Personal Details Check</option>
+    <option value="credit_check">Credit Check</option>
+    <option value="certification_check">Certification Check</option>
+    </select>
+    <input type="text" id="procNoteMessage" placeholder="Message">
+    <button onclick="addProcessingNote()">Add Processing Note</button>
+
+    <h2>Mark Subphase as Complete</h2>
+    <input type="text" id="completeAppId" placeholder="Application ID">
+    <select id="completePhase">
+    <option value="personal_details_check">Personal Details Check</option>
+    <option value="credit_check">Credit Check</option>
+    <option value="certification_check">Certification Check</option>
+    </select>
+    <button onclick="markComplete()">Mark as Complete</button>
+
+
+    <h2>View Application</h2>
+    <input type="text" id="viewAppId" placeholder="Application ID">
+    <button onclick="viewApplication()">View</button>
+    <div id="appDetails"></div>
+</body>
+</html>
